@@ -39,7 +39,7 @@ gulp.task('watch', () => {
 	gulp.run('pug');
 	gulp.watch(path.join(src, '*.scss'), ['sass']);
 	gulp.watch(path.join(src, 'index.js'), ['scripts']);
-	gulp.watch(path.join(dst, '/'), ['pug']);
+	gulp.watch(path.join(src, '/'), ['pug']);
 });
 
 gulp.task('default', ['sass', 'scripts', 'pug']);
