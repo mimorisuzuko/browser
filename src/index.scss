@@ -1,5 +1,5 @@
-.row{
-	&::after{
+.row {
+	&::after {
 		clear: both;
 		content: '.';
 		font-size: 0;
@@ -7,10 +7,10 @@
 		display: block;
 		visibility: hidden;
 	}
-	.col{
+	.col {
 		float: left;
-		@for $i from 1 through 100{
-			&.per#{$i}{
+		@for $i from 1 through 100 {
+			&.per#{$i} {
 				width: percentage($i / 100);
 			}
 		}

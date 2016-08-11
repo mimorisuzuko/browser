@@ -5,6 +5,7 @@ const notify = require('gulp-notify');
 const browserify = require('gulp-browserify');
 const pug = require('gulp-pug');
 const path = require('path');
+const autoprefixer = require('gulp-autoprefixer');
 
 const src = 'src';
 const dst = 'dst';
@@ -13,6 +14,7 @@ gulp.task('sass', () => {
 	gulp.src(path.join(src, '*.scss'))
 		.pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
 		.pipe(sass.sync())
+		.pipe(autoprefixer())
 		.pipe(gulp.dest(path.join(dst, '/')));
 });
 

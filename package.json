@@ -10,7 +10,9 @@
   "author": "Hiroki Usuba <hrky0206@gmail.com> (http://mimorisuzuko.github.io/)",
   "license": "MIT",
   "devDependencies": {
+    "autoprefixer": "^6.4.0",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-browserify": "^0.5.1",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
