@@ -9,6 +9,7 @@ const browserify = require('browserify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const webserver = require('gulp-webserver');
+const uglify = require('gulp-uglify');
 
 const src = 'src';
 const dst = path.join('dst/');
@@ -42,7 +43,7 @@ gulp.task('webserver', () => {
         .pipe(webserver({
             host: 'localhost',
             port: 6280,
-            livereload: true
+            livereload: false
         }));
 });
 
