@@ -10,6 +10,8 @@ const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const webserver = require('gulp-webserver');
 const uglify = require('gulp-uglify');
+const sourcemaps = require('gulp-sourcemaps');
+const buffer = require('vinyl-buffer');
 
 const src = 'src';
 const dst = path.join('dst/');
@@ -28,6 +30,10 @@ gulp.task('script', () => {
 		.bundle()
 		.on('error', (err) => console.log(`Error : ${err.message}`))
 		.pipe(source('index.js'))
+		.pipe(buffer())
+		.pipe(sourcemaps.init({ loadMaps: true }))
+		.pipe(uglify())
+		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dst));
 });
 
