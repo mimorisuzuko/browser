@@ -35,7 +35,6 @@ gulp.task('js-without-babel', () => {
 		.pipe(source('index.js'))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dst));
 });
