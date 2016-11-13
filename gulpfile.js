@@ -16,7 +16,8 @@ const buffer = require('vinyl-buffer');
 const src = 'src';
 const dst = 'dst/';
 const scssPath = path.join(src, '*.scss');
-const jsPath = path.join(src, 'index.js');
+const indexjsPath = path.join(src, 'index.js');
+const jsPath = path.join(src, '*.js');
 const pugPath = path.join(src, '*.pug');
 
 gulp.task('sass', () => {
@@ -28,7 +29,7 @@ gulp.task('sass', () => {
 });
 
 gulp.task('js-without-babel', () => {
-	browserify(jsPath, { debug: true })
+	browserify(indexjsPath, { debug: true })
 		.bundle()
 		.on('error', (err) => console.log(`Error : ${err.message}`))
 		.pipe(source('index.js'))
@@ -40,7 +41,7 @@ gulp.task('js-without-babel', () => {
 });
 
 gulp.task('js', () => {
-	browserify(jsPath, { debug: true })
+	browserify(indexjsPath, { debug: true })
 		.transform(babelify, { presets: ['es2015'] })
 		.bundle()
 		.on('error', (err) => console.log(`Error : ${err.message}`))
