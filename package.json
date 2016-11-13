@@ -1,5 +1,5 @@
 {
-  "name": "${yourName}",
+  "name": "browser-template",
   "version": "0.0.1",
   "description": "${yourDescription}",
   "main": "${yourJavaScriptFile}.js",
