@@ -16,8 +16,8 @@ const buffer = require('vinyl-buffer');
 const src = 'src';
 const dst = 'dst/';
 const scssPath = path.join(src, '*.scss');
-const indexjsPath = path.join(src, 'index.js');
-const jsPath = path.join(src, '*.js');
+const indexjsxPath = path.join(src, 'index.jsx');
+const jsxPath = path.join(src, '*.jsx');
 const pugPath = path.join(src, '*.pug');
 
 gulp.task('sass', () => {
@@ -28,24 +28,15 @@ gulp.task('sass', () => {
 		.pipe(gulp.dest(dst));
 });
 
-gulp.task('js-without-babel', () => {
-	browserify(indexjsPath, { debug: true })
+gulp.task('jsx', () => {
+	process.env.NODE_ENV = 'production';
+	browserify(indexjsxPath, { debug: true })
+		.transform(babelify, { presets: ['es2015', 'react'] })
 		.bundle()
 		.on('error', (err) => console.log(`Error : ${err.message}`))
 		.pipe(source('index.js'))
 		.pipe(buffer())
-		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest(dst));
-});
-
-gulp.task('js', () => {
-	browserify(indexjsPath, { debug: true })
-		.transform(babelify, { presets: ['es2015'] })
-		.bundle()
-		.on('error', (err) => console.log(`Error : ${err.message}`))
-		.pipe(source('index.js'))
-		.pipe(buffer())
+		.pipe(uglify())
 		.pipe(sourcemaps.init({ loadMaps: true }))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dst));
@@ -67,15 +58,9 @@ gulp.task('webserver', () => {
 		}));
 });
 
-gulp.task('watch', ['webserver', 'sass', 'js', 'pug'], () => {
+gulp.task('watch', ['webserver', 'sass', 'jsx', 'pug'], () => {
 	gulp.watch(scssPath, ['sass']);
-	gulp.watch(jsPath, ['js']);
-	gulp.watch(pugPath, ['pug']);
-});
-
-gulp.task('watch/dev', ['webserver', 'sass', 'js-without-babel', 'pug'], () => {
-	gulp.watch(scssPath, ['sass']);
-	gulp.watch(jsPath, ['js-without-babel']);
+	gulp.watch(jsxPath, ['jsx']);
 	gulp.watch(pugPath, ['pug']);
 });
 
