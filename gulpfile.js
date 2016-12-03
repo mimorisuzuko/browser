@@ -36,8 +36,8 @@ gulp.task('jsx', () => {
 		.on('error', (err) => console.log(`Error : ${err.message}`))
 		.pipe(source('index.js'))
 		.pipe(buffer())
-		.pipe(uglify())
 		.pipe(sourcemaps.init({ loadMaps: true }))
+		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dst));
 });
