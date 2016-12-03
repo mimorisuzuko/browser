@@ -1,3 +1,5 @@
 # browser template
 
-Gulp + Browserify + Babel + SCSS + Pug
+This branch is for React.
+
+Gulp + Browserify + Babel + React + SCSS + Pug
