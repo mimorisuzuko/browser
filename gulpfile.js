@@ -12,9 +12,10 @@ const webserver = require('gulp-webserver');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const buffer = require('vinyl-buffer');
+const watchify = require('watchify');
 
 const src = 'src';
-const dst = 'dst/';
+const dst = 'docs/';
 const scssPath = path.join(src, '*.scss');
 const indexjsxPath = path.join(src, 'index.jsx');
 const jsxPath = path.join(src, '*.jsx');
@@ -30,7 +31,11 @@ gulp.task('sass', () => {
 
 gulp.task('jsx', () => {
 	process.env.NODE_ENV = 'production';
-	browserify(indexjsxPath, { debug: true })
+	browserify({
+		entries: [indexjsxPath],
+		debug: true,
+		plugin: [watchify]
+	})
 		.transform(babelify, { presets: ['es2015', 'react'] })
 		.bundle()
 		.on('error', (err) => console.log(`Error : ${err.message}`))
@@ -64,4 +69,4 @@ gulp.task('watch', ['webserver', 'sass', 'jsx', 'pug'], () => {
 	gulp.watch(pugPath, ['pug']);
 });
 
-gulp.task('default', ['sass', 'js', 'pug']);
+gulp.task('default', ['sass', 'jsx', 'pug']);
