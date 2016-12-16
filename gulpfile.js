@@ -14,6 +14,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const buffer = require('vinyl-buffer');
 const watchify = require('watchify');
 
+let watch = false;
 const src = 'src';
 const dst = 'docs/';
 const scssPath = path.join(src, '*.scss');
@@ -30,11 +31,17 @@ gulp.task('sass', () => {
 });
 
 gulp.task('jsx', () => {
+	const plugin = [];
+
+	if (watch) {
+		plugin.push(watchify);
+	}
+
 	process.env.NODE_ENV = 'production';
 	browserify({
 		entries: [indexjsxPath],
 		debug: true,
-		plugin: [watchify]
+		plugin
 	})
 		.transform(babelify, { presets: ['es2015', 'react'] })
 		.bundle()
@@ -63,7 +70,11 @@ gulp.task('webserver', () => {
 		}));
 });
 
-gulp.task('watch', ['webserver', 'sass', 'jsx', 'pug'], () => {
+gulp.task('enabled-watchify', () => {
+	watch = true;
+});
+
+gulp.task('watch', ['webserver', 'enabled-watchify', 'sass', 'jsx', 'pug'], () => {
 	gulp.watch(scssPath, ['sass']);
 	gulp.watch(jsxPath, ['jsx']);
 	gulp.watch(pugPath, ['pug']);
