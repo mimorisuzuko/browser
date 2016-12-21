@@ -14,7 +14,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const buffer = require('vinyl-buffer');
 const watchify = require('watchify');
 
-let watch = false;
+const plugin = [];
 const src = 'src';
 const dst = 'docs/';
 const scssPath = path.join(src, '*.scss');
@@ -31,12 +31,6 @@ gulp.task('sass', () => {
 });
 
 gulp.task('jsx', () => {
-	const plugin = [];
-
-	if (watch) {
-		plugin.push(watchify);
-	}
-
 	process.env.NODE_ENV = 'production';
 	browserify({
 		entries: [indexjsxPath],
@@ -71,7 +65,7 @@ gulp.task('webserver', () => {
 });
 
 gulp.task('enabled-watchify', () => {
-	watch = true;
+	plugin.push(watchify);
 });
 
 gulp.task('watch', ['webserver', 'enabled-watchify', 'sass', 'jsx', 'pug'], () => {
