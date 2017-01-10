@@ -13,14 +13,25 @@ const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const buffer = require('vinyl-buffer');
 const watchify = require('watchify');
+const minimist = require('minimist');
+const _ = require('lodash');
 
-const plugin = [];
+const {argv} = process;
 const src = 'src';
 const dst = 'docs/';
 const scssPath = path.join(src, '*.scss');
 const indexjsxPath = path.join(src, 'index.jsx');
 const jsxPath = path.join(src, '*.jsx');
 const pugPath = path.join(src, '*.pug');
+const {_: [taskName]} = minimist(_.slice(argv, 2));
+let bundler = browserify({
+	entries: [indexjsxPath],
+	debug: true,
+	transform: [
+		[babelify, { presets: ['es2015', 'react'] }]
+	]
+});
+bundler = taskName === 'watch' ? watchify(bundler) : bundler;
 
 gulp.task('sass', () => {
 	gulp.src(scssPath)
@@ -32,12 +43,7 @@ gulp.task('sass', () => {
 
 gulp.task('jsx', () => {
 	process.env.NODE_ENV = 'production';
-	browserify({
-		entries: [indexjsxPath],
-		debug: true,
-		plugin
-	})
-		.transform(babelify, { presets: ['es2015', 'react'] })
+	bundler
 		.bundle()
 		.on('error', (err) => console.log(`Error : ${err.message}`))
 		.pipe(source('index.js'))
@@ -64,11 +70,7 @@ gulp.task('webserver', () => {
 		}));
 });
 
-gulp.task('enabled-watchify', () => {
-	plugin.push(watchify);
-});
-
-gulp.task('watch', ['webserver', 'enabled-watchify', 'sass', 'jsx', 'pug'], () => {
+gulp.task('watch', ['webserver', 'sass', 'jsx', 'pug'], () => {
 	gulp.watch(scssPath, ['sass']);
 	gulp.watch(jsxPath, ['jsx']);
 	gulp.watch(pugPath, ['pug']);
