@@ -5,7 +5,8 @@
   "main": "${yourJavaScriptFile}.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pug": "pug --hierarchy -o dst/ src/"
+    "pug": "pug --hierarchy -o dst/ src/",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "Hiroki Usuba <hrky0206@gmail.com> (http://mimorisuzuko.github.io/)",
