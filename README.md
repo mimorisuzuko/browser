@@ -1,6 +1,6 @@
 # browser template
 
-webpack + Babel + React + Pug (+ SCSS)
+webpack + Babel + React + Pug + SCSS
 
 ## Compile pug files
 
