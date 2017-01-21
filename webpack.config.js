@@ -1,7 +1,8 @@
 const webpack = require('webpack');
 const libpath = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
+module.exports = [{
 	entry: libpath.join(__dirname, 'src/'),
 	output: {
 		path: libpath.join(__dirname, '/dst'),
@@ -25,4 +26,23 @@ module.exports = {
 		extensions: ['', '.js', '.jsx']
 	},
 	plugins: [new webpack.optimize.UglifyJsPlugin()]
-};
+}, {
+	entry: {
+		style: './src/index.scss'
+	},
+	output: {
+		path:  libpath.join(__dirname, 'dst'),
+		filename: 'index.css'
+	},
+	module: {
+		loaders: [
+			{
+				test: /\.scss$/,
+				loader: ExtractTextPlugin.extract('style-loader', 'css-loader?minimize!sass-loader')
+			}
+		]
+	},
+	plugins: [
+		new ExtractTextPlugin('index.css')
+	]
+}];
