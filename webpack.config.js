@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = [{
 	entry: libpath.join(__dirname, 'src/'),
 	output: {
-		path: libpath.join(__dirname, '/dst'),
+		path: libpath.join(__dirname, '/docs'),
 		filename: 'index.js'
 	},
 	module: {
@@ -38,7 +38,7 @@ module.exports = [{
 		style: './src/index.scss'
 	},
 	output: {
-		path: libpath.join(__dirname, 'dst'),
+		path: libpath.join(__dirname, '/docs'),
 		filename: 'index.css'
 	},
 	module: {
