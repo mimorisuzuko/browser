@@ -4,10 +4,11 @@ webpack + Babel + React + Pug + SCSS
 
 ## Scripts
 
-* `npm run pug`: Compile `.pug`
-* `npm run build`: `webpack`
-* `npm run build-with-source-map`: `webpack -d`
-* `npm run watch`: Run `webpack-dev-server`
+* `pug`: Compile `.pug` -> `.html`
+* `build`: Compile all
+* `build:dev`: With souce map
+* `watch`: Run `webpack-dev-server`
+* `webpack`: shortcut
 
 ## TODO
 
