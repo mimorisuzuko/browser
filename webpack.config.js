@@ -1,11 +1,13 @@
 const webpack = require('webpack');
 const libpath = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const dst = 'docs';
 
 module.exports = [{
 	entry: libpath.join(__dirname, 'src/'),
 	output: {
-		path: libpath.join(__dirname, '/docs'),
+		path: libpath.join(__dirname, dst),
 		filename: 'index.js'
 	},
 	module: {
@@ -16,29 +18,38 @@ module.exports = [{
 				loader: 'babel',
 				query: {
 					presets: ['react', 'es2015'],
-					plugins: ['transform-react-jsx']
 				}
 			}
 		]
 	},
-	devtool: 'eval',
 	resolve: {
 		extensions: ['', '.js', '.jsx']
 	},
 	plugins: [
+		new CleanWebpackPlugin([dst], {
+			root: __dirname,
+			verbose: false,
+			dry: false,
+			exclude: ['index.html']
+		}),
 		new webpack.DefinePlugin({
 			'process.env': {
 				NODE_ENV: JSON.stringify('production')
 			}
 		}),
-		new webpack.optimize.UglifyJsPlugin()
+		new webpack.optimize.UglifyJsPlugin({
+			compress: {
+				warnings: false
+			},
+			mangle: true
+		})
 	]
 }, {
 	entry: {
 		style: './src/index.scss'
 	},
 	output: {
-		path: libpath.join(__dirname, '/docs'),
+		path: libpath.join(__dirname, dst),
 		filename: 'index.css'
 	},
 	module: {
