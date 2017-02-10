@@ -5,15 +5,14 @@
   "main": "${yourJavaScriptFile}.js",
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
-    "build": "npm run build:pug && npm run build:scss && ./node_modules/.bin/webpack",
+    "build": "npm-run-all build:*",
     "build:pug": "./node_modules/.bin/pug --hierarchy -o docs/ src/",
     "build:scss": "./node_modules/node-sass/bin/node-sass src/index.scss docs/index.css --output-style compressed",
-    "build:js": "./node_modules/.bin/webpack",
-    "build:dev": "npm run build:pug && npm run build:scss && npm run build:js -- -d",
-    "webpack-dev-server": "./node_modules/.bin/webpack-dev-server --content-base docs/",
+    "build:js": "npm run webpack",
+    "watch": "npm-run-all --parallel watch:*",
     "watch:pug": "npm run build:pug -- -w",
     "watch:scss": "npm run build:scss -- -w",
-    "watch:js": "npm run build:js -- -w"
+    "watch:js": "./node_modules/.bin/webpack-dev-server --content-base docs/"
   },
   "keywords": [],
   "author": "Hiroki Usuba <hrky0206@gmail.com> (http://mimorisuzuko.github.io/)",
@@ -25,6 +24,7 @@
     "babel-preset-react": "^6.22.0",
     "clean-webpack-plugin": "^0.1.15",
     "node-sass": "^4.5.0",
+    "npm-run-all": "^4.0.1",
     "pug-cli": "^1.0.0-alpha6",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
