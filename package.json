@@ -2,7 +2,7 @@
   "name": "browser-template",
   "version": "0.0.1",
   "description": "${yourDescription}",
-  "main": "${yourJavaScriptFile}.js",
+  "main": "docs/index.html",
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
     "build": "npm-run-all build:*",
