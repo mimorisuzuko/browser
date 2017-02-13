@@ -1,3 +1,3 @@
 # browser template
 
-webpack + Babel + React + Pug + SCSS
+webpack + Babel + React + Pug + SCSS(PostCSS)

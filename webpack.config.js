@@ -19,6 +19,15 @@ module.exports = {
 				query: {
 					presets: ['react', 'es2015'],
 				}
+			},
+			{
+				test: /\.scss$/,
+				use: [
+					'style-loader',
+					'css-loader',
+					'postcss-loader',
+					'sass-loader'
+				]
 			}
 		]
 	},
@@ -30,7 +39,7 @@ module.exports = {
 			root: __dirname,
 			verbose: false,
 			dry: false,
-			exclude: ['index.html', 'index.css']
+			exclude: ['index.html']
 		}),
 		new DefinePlugin({
 			'process.env': {
