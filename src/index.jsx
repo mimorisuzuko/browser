@@ -1,5 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const {Sample} = require('./components/sample.jsx');
 const {Component} = React;
 
 require('./index.scss');
@@ -7,7 +8,9 @@ require('./index.scss');
 class App extends Component {
 	render() {
 		return (
-			<div>Hello, World from React!</div>
+			<div>
+				<Sample />
+			</div>
 		);
 	}
 }
