@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const libpath = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const {DefinePlugin, optimize: {UglifyJsPlugin}} = webpack;
+const { optimize: { UglifyJsPlugin } } = webpack;
 const dst = 'docs';
 
 module.exports = {
@@ -15,38 +14,18 @@ module.exports = {
 	module: {
 		loaders: [
 			{
-				test: /\.(js|jsx)$/,
+				test: /\.js$/,
 				exclude: /node_modules/,
 				loaders: [
-					'babel-loader?presets[]=es2015,presets[]=react'
-				]
-			},
-			{
-				test: /\.scss$/,
-				use: [
-					'style-loader',
-					'css-loader',
-					'postcss-loader',
-					'sass-loader'
+					'babel-loader?presets[]=es2015'
 				]
 			}
 		]
 	},
 	resolve: {
-		extensions: ['.js', '.jsx']
+		extensions: ['.js']
 	},
 	plugins: [
-		new CleanWebpackPlugin([dst], {
-			root: __dirname,
-			verbose: false,
-			dry: false,
-			exclude: ['index.html']
-		}),
-		new DefinePlugin({
-			'process.env': {
-				NODE_ENV: JSON.stringify('production')
-			}
-		}),
 		new UglifyJsPlugin({
 			compress: {
 				warnings: false
