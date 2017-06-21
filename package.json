@@ -9,7 +9,7 @@
     "build:js": "node fuse.js",
     "watch": "npm-run-all --parallel watch:*",
     "watch:pug": "npm run build:pug -- -w",
-    "watch:js": "echo TODO"
+    "watch:js": "node fuse.js watch"
   },
   "keywords": [],
   "author": "Hiroki Usuba <hrky0206@gmail.com> (http://mimorisuzuko.github.io/)",
