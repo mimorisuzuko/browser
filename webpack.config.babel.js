@@ -1,14 +1,16 @@
-import { DefinePlugin, optimize } from 'webpack';
+import { DefinePlugin, optimize, HotModuleReplacementPlugin } from 'webpack';
 import libpath from 'path';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 
 const { UglifyJsPlugin } = optimize;
 const dst = 'docs';
-let { env: { NODE_ENV } } = process;
+let { env: { NODE_ENV, WATCH } } = process;
 
 if (!NODE_ENV) {
 	NODE_ENV = 'production';
 }
+
+WATCH = WATCH === 'true';
 
 const isProduction = NODE_ENV === 'production';
 const presets = ['react'];
@@ -31,7 +33,7 @@ if (isProduction) {
 	plugins.push(new UglifyJsPlugin({ compress: { warnings: false }, mangle: true }));
 }
 
-export default {
+const config = {
 	entry: [
 		libpath.join(__dirname, 'src/')
 	],
@@ -67,3 +69,24 @@ export default {
 	},
 	plugins
 };
+
+if (WATCH) {
+	Object.assign(config, {
+		entry: [
+			'webpack-dev-server/client?http://0.0.0.0:3000',
+			'webpack/hot/only-dev-server',
+			libpath.join(__dirname, 'src/')
+		],
+		devServer: {
+			hot: true,
+			contentBase: dst,
+			port: 3000,
+			host: '0.0.0.0',
+			inline: true
+		}
+	});
+
+	config.plugins.push(new HotModuleReplacementPlugin());
+}
+
+export default config;
