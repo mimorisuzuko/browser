@@ -1,8 +1,6 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const { Component } = React;
-
-require('./index.scss');
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import './index.scss';
 
 class App extends Component {
 	render() {

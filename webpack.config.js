@@ -4,6 +4,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const {DefinePlugin, optimize: {UglifyJsPlugin}} = webpack;
 const dst = 'docs';
 
+process.env.NODE_ENV;
+
 module.exports = {
 	entry: [
 		libpath.join(__dirname, 'src/')
