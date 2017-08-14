@@ -1,16 +1,13 @@
 html,
-body,
-main {
+body {
 	width: 100%;
 	height: 100%;
 }
 
 body {
 	margin: 0;
-}
 
-main {
-	> div {
+	> main {
 		width: 100%;
 		height: 100%;
 	}
