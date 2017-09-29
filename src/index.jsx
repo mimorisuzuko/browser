@@ -1,6 +1,21 @@
 import React from 'react';
-import { render } from 'react-dom';
-import App from './App';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
 import './index.scss';
 
-render(<App />, document.querySelector('main'));
+const $main = document.querySelector('main');
+const render = () => {
+	const { default: App } = require('./App');
+
+	ReactDOM.render(
+		<AppContainer>
+			<App />
+		</AppContainer>,
+		$main
+	);
+};
+
+render();
+if (module.hot) {
+	module.hot.accept(render);
+}

@@ -1,19 +1,11 @@
 import { DefinePlugin, optimize, HotModuleReplacementPlugin } from 'webpack';
 import libpath from 'path';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
+import { WATCH, isProduction, NODE_ENV } from './env';
 
 const { UglifyJsPlugin, AggressiveMergingPlugin } = optimize;
 const dst = 'docs';
-let { env: { NODE_ENV, WATCH } } = process;
 
-if (!NODE_ENV) {
-	NODE_ENV = 'production';
-}
-
-WATCH = WATCH === 'true';
-
-const isProduction = NODE_ENV === 'production';
-const presets = ['react'];
 const plugins = [
 	new CleanWebpackPlugin([dst], {
 		root: __dirname,
@@ -28,16 +20,36 @@ const plugins = [
 	})
 ];
 
+const context = libpath.join(__dirname, 'src');
+const generateScopedName = '[name]__[local]';
+const babelPresets = ['react'];
+const babelPlugins = [
+	'transform-decorators-legacy',
+	['react-css-modules',
+		{
+			context,
+			generateScopedName,
+			filetypes: {
+				'.scss': {
+					syntax: 'postcss-scss'
+				}
+			}
+		}]
+];
+
 if (isProduction) {
-	presets.push('es2015');
+	babelPresets.push('es2015');
 	plugins.push(
 		new UglifyJsPlugin({ compress: { warnings: false }, mangle: true }),
 		new AggressiveMergingPlugin()
 	);
+} else {
+	babelPlugins.push('react-hot-loader/babel');
 }
 
-const context = libpath.join(__dirname, 'src');
-const generateScopedName = '[name]__[local]';
+if (WATCH) {
+	plugins.push(new HotModuleReplacementPlugin());
+}
 
 const config = {
 	entry: context,
@@ -53,20 +65,8 @@ const config = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets,
-						plugins: [
-							'transform-decorators-legacy',
-							['react-css-modules',
-								{
-									context,
-									generateScopedName,
-									filetypes: {
-										'.scss': {
-											syntax: 'postcss-scss'
-										}
-									}
-								}]
-						]
+						presets: babelPresets,
+						plugins: babelPlugins
 					}
 				}
 			},
@@ -92,6 +92,7 @@ if (WATCH) {
 		entry: [
 			'webpack-dev-server/client?http://0.0.0.0:3000',
 			'webpack/hot/only-dev-server',
+			'react-hot-loader/patch',
 			libpath.join(__dirname, 'src/')
 		],
 		devServer: {
@@ -102,8 +103,6 @@ if (WATCH) {
 			inline: true
 		}
 	});
-
-	config.plugins.push(new HotModuleReplacementPlugin());
 }
 
 export default config;
