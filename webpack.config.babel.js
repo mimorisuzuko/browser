@@ -1,10 +1,11 @@
-import { DefinePlugin, optimize, HotModuleReplacementPlugin } from 'webpack';
+import { DefinePlugin, optimize, HotModuleReplacementPlugin, LoaderOptionsPlugin } from 'webpack';
 import libpath from 'path';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import { WATCH, isProduction, NODE_ENV } from './env';
 
 const { UglifyJsPlugin, AggressiveMergingPlugin } = optimize;
 const dst = 'docs';
+const context = libpath.join(__dirname, 'src');
 
 const plugins = [
 	new CleanWebpackPlugin([dst], {
@@ -17,11 +18,15 @@ const plugins = [
 		'process.env': {
 			NODE_ENV: JSON.stringify(NODE_ENV)
 		}
+	}),
+	new LoaderOptionsPlugin({
+		options: {
+			context
+		}
 	})
 ];
 
-const context = libpath.join(__dirname, 'src');
-const generateScopedName = '[name]__[local]';
+const generateScopedName = '[name]__[local]_[hash:base64:5]';
 const babelPresets = ['react'];
 const babelPlugins = [
 	'transform-decorators-legacy',
