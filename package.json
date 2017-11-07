@@ -7,10 +7,10 @@
     "webpack": "./node_modules/.bin/webpack --config webpack.config.babel.js",
     "build": "npm-run-all build:*",
     "build:pug": "./node_modules/.bin/pug --hierarchy -o docs/ src/",
-    "build:js": "NODE_ENV=production BABEL_ENV=production npm run webpack",
+    "build:js": "npm run webpack",
     "watch": "npm-run-all --parallel watch:*",
     "watch:pug": "npm run build:pug -- -w",
-    "watch:js": "NODE_ENV=development BABEL_ENV=development WATCH=true ./node_modules/.bin/webpack-dev-server --config webpack.config.babel.js"
+    "watch:js": "WATCH=true ./node_modules/.bin/webpack-dev-server --config webpack.config.babel.js"
   },
   "keywords": [],
   "author": "Hiroki Usuba <hrky0206@gmail.com> (http://mimorisuzuko.github.io/)",
