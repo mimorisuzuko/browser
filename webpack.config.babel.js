@@ -34,6 +34,7 @@ const babelPlugins = [
 		{
 			context,
 			generateScopedName,
+			exclude: 'node_modules',
 			filetypes: {
 				'.scss': {
 					syntax: 'postcss-scss'
@@ -83,6 +84,10 @@ const config = {
 					'postcss-loader',
 					'sass-loader'
 				]
+			},
+			{
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader']
 			}
 		]
 	},
