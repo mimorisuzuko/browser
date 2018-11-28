@@ -1,4 +1,8 @@
-const { DefinePlugin, HotModuleReplacementPlugin, LoaderOptionsPlugin } = require('webpack');
+const {
+	DefinePlugin,
+	HotModuleReplacementPlugin,
+	LoaderOptionsPlugin
+} = require('webpack');
 const libpath = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -6,11 +10,13 @@ module.exports = (env, { mode }) => {
 	const dst = 'docs';
 	const generateScopedName = '[name]__[local]_[hash:base64:5]';
 	const context = libpath.join(__dirname, 'src/');
-	const presets = ['react'];
+	const presets = ['@babel/react'];
 	const isProduction = mode === 'production';
 	const babelPlugins = [
-		'transform-decorators-legacy',
-		['react-css-modules',
+		['@babel/plugin-proposal-decorators', { legacy: true }],
+		['@babel/plugin-proposal-class-properties', { loose: false }],
+		[
+			'react-css-modules',
 			{
 				context,
 				generateScopedName,
@@ -43,15 +49,18 @@ module.exports = (env, { mode }) => {
 	];
 
 	if (isProduction) {
-		presets.push(
-			[
-				'env', {
-					targets: {
-						chrome: 59
-					}
+		presets.push([
+			'@babel/env',
+			{
+				targets: {
+					chrome: 59
 				}
-			],
-			'stage-3'
+			}
+		]);
+		babelPlugins.push(
+			'@babel/plugin-syntax-dynamic-import',
+			'@babel/plugin-syntax-import-meta',
+			'@babel/plugin-proposal-json-strings'
 		);
 	} else {
 		babelPlugins.push('react-hot-loader/babel');
@@ -60,20 +69,18 @@ module.exports = (env, { mode }) => {
 
 	return {
 		context,
-		entry: isProduction ?
-			[
-				'babel-polyfill',
-				context
-			] : [
+		entry: isProduction
+			? ['@babel/polyfill', context]
+			: [
 				'webpack-dev-server/client?http://0.0.0.0:3000',
 				'webpack/hot/only-dev-server',
 				'react-hot-loader/patch',
 				context
-			],
+			  ],
 		output: {
 			path: libpath.join(__dirname, dst),
 			publicPath: 'http://localhost:3000/',
-			filename: 'index.js'
+			filename: '[name].js'
 		},
 		module: {
 			rules: [
@@ -95,6 +102,10 @@ module.exports = (env, { mode }) => {
 						'postcss-loader',
 						'sass-loader'
 					]
+				},
+				{
+					test: /\.css$/,
+					use: ['style-loader', 'css-loader']
 				}
 			]
 		},
@@ -107,6 +118,12 @@ module.exports = (env, { mode }) => {
 			port: 3000,
 			host: '0.0.0.0',
 			contentBase: libpath.join(__dirname, dst)
+		},
+		optimization: {
+			splitChunks: {
+				name: 'vendor',
+				chunks: 'initial'
+			}
 		}
 	};
 };
