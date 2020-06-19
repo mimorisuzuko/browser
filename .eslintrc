@@ -1,6 +1,12 @@
 {
-	"extends": ["eslint:recommended", "plugin:react/recommended"],
-	"plugins": ["react"],
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended"
+	],
+	"plugins": [
+		"react",
+		"prettier"
+	],
 	"parserOptions": {
 		"ecmaVersion": 6,
 		"sourceType": "module",
@@ -16,17 +22,35 @@
 	},
 	"globals": {},
 	"rules": {
-		"quotes": ["error", "single"],
-		"indent": ["error", "tab"],
+		"prettier/prettier": "error",
+		"quotes": [
+			"error",
+			"single"
+		],
 		"no-console": [
 			"warn",
 			{
-				"allow": ["warn", "error"]
+				"allow": [
+					"warn",
+					"error"
+				]
 			}
 		],
-		"arrow-parens": ["error", "always"],
-		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+		"arrow-parens": [
+			"error",
+			"always"
+		],
 		"react/prop-types": "off",
-		"jsx-quotes": ["error", "prefer-single"]
+		"jsx-quotes": [
+			"error",
+			"prefer-single"
+		],
+		"react/self-closing-comp": [
+			"error",
+			{
+				"component": true,
+				"html": true
+			}
+		]
 	}
 }
