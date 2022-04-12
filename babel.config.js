@@ -1,20 +1,22 @@
 module.exports = (api) => {
-    const plugins = [];
+    api.cache(true);
+
+    const plugins = ['react-hot-loader/babel'];
     const presets = [
-        '@babel/react',
+        [
+            '@babel/react',
+            {
+                runtime: 'automatic'
+            }
+        ],
         [
             '@babel/env',
             {
-                targets: {
-                    chrome: 59
-                }
+                useBuiltIns: 'usage',
+                corejs: 3
             }
         ]
     ];
-
-    if (api.env('development')) {
-        plugins.push('react-hot-loader/babel');
-    }
 
     return { plugins, presets };
 };

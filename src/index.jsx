@@ -1,21 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
+import { createRoot } from 'react-dom/client';
 
-const $main = document.querySelector('main');
-const render = () => {
-    const { default: App } = require('./components/App');
+const { default: App } = require('./components/App');
+const root = createRoot(document.querySelector('main'));
 
-    ReactDOM.render(
-        <AppContainer>
-            <App />
-        </AppContainer>,
-        $main
-    );
-};
-
-render();
-
-if (module.hot) {
-    module.hot.accept(render);
-}
+root.render(<App />);

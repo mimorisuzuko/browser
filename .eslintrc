@@ -1,11 +1,12 @@
 {
 	"extends": [
 		"eslint:recommended",
-		"plugin:react/recommended"
+		"plugin:react/recommended",
+		"plugin:react/jsx-runtime"
 	],
 	"plugins": [
-		"react",
-		"prettier"
+		"prettier",
+		"react"
 	],
 	"parserOptions": {
 		"ecmaVersion": 6,
@@ -15,7 +16,7 @@
 			"legacyDecorators": true
 		}
 	},
-	"parser": "babel-eslint",
+	"parser": "@babel/eslint-parser",
 	"env": {
 		"node": true,
 		"browser": true
@@ -23,10 +24,6 @@
 	"globals": {},
 	"rules": {
 		"prettier/prettier": "error",
-		"quotes": [
-			"error",
-			"single"
-		],
 		"no-console": [
 			"warn",
 			{
@@ -36,15 +33,7 @@
 				]
 			}
 		],
-		"arrow-parens": [
-			"error",
-			"always"
-		],
 		"react/prop-types": "off",
-		"jsx-quotes": [
-			"error",
-			"prefer-single"
-		],
 		"react/self-closing-comp": [
 			"error",
 			{

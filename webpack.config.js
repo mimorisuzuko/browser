@@ -36,7 +36,7 @@ module.exports = (env, { mode }) => {
     return {
         context,
         entry: isProduction
-            ? ['@babel/polyfill', context]
+            ? [context]
             : [
                   'webpack-dev-server/client?http://0.0.0.0:3000',
                   'webpack/hot/only-dev-server',

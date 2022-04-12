@@ -1,5 +1,5 @@
-import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
+import { hot } from 'react-hot-loader/root';
 
 const App = () => {
     return (
@@ -7,11 +7,14 @@ const App = () => {
             onClick={() => {
                 console.log('Click');
             }}
-            className={css({ width: '100%', height: '100%' })}
+            className={css`
+                width: 100%;
+                height: 100%;
+            `}
         >
             Hello
         </div>
     );
 };
 
-export default App;
+export default hot(App);
