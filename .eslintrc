@@ -2,10 +2,10 @@
 	"extends": [
 		"eslint:recommended",
 		"plugin:react/recommended",
-		"plugin:react/jsx-runtime"
+		"plugin:react/jsx-runtime",
+		"prettier"
 	],
 	"plugins": [
-		"prettier",
 		"react"
 	],
 	"parserOptions": {
@@ -23,7 +23,6 @@
 	},
 	"globals": {},
 	"rules": {
-		"prettier/prettier": "error",
 		"no-console": [
 			"warn",
 			{
