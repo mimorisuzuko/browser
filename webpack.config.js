@@ -68,7 +68,8 @@ module.exports = (env, { mode }) => {
             host: '0.0.0.0',
             useLocalIp: true,
             open: true,
-            contentBase: libpath.join(__dirname, dst)
+            contentBase: libpath.join(__dirname, dst),
+            headers: { 'Access-Control-Allow-Origin': '*' }
         },
         optimization: {
             splitChunks: {
