@@ -66,6 +66,8 @@ module.exports = (env, { mode }) => {
             hot: true,
             port: 3000,
             host: '0.0.0.0',
+            useLocalIp: true,
+            open: true,
             contentBase: libpath.join(__dirname, dst)
         },
         optimization: {
